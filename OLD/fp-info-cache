@@ -1,4 +1,4 @@
-24742608657987704
+24751365140842000
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -370,6 +370,13 @@ battery CR-3032 coin cell vertical
 0
 2
 2
+Bidirectional_ESC
+Bi_ESC_foot
+
+
+0
+4
+4
 Button_Switch_Keyboard
 SW_Cherry_MX_1.00u_PCB
 Cherry MX keyswitch, 1.00u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf
@@ -57259,6 +57266,13 @@ One digit LED 7 segment SA39-11 SC39-11 SA39-12 SC39-12
 0
 10
 10
+ESP-32 DevkitC
+MODULE_ESP8266DEVKITC02DF
+
+
+0
+30
+30
 Ferrite_THT
 LairdTech_28C0236-0JW-10
 Ferrite, vertical, LairdTech 28C0236-0JW-10, https://assets.lairdtech.com/home/brandworld/files/28C0236-0JW-10.pdf, JW Miller core https://www.bourns.com/products/magnetic-products/j.w.-miller-through-hole-ferrite-beads-emi-filters
@@ -57462,6 +57476,13 @@ emi filter
 0
 5
 5
+Flysky fs-a8s
+Flysky fs-a8s_footprint
+
+
+0
+3
+3
 Fuse
 FuseHolder_Blade_ATO_Littelfuse_FLR_178.6165
 Littelfuse fuse holder for ATO/FKS blade fuses, 80V, vertical, 20 x 6mm, PCB thickness up to 1.5mm, http://www.littelfuse.com/~/media/commercial-vehicle/datasheets/automotive-fuse-holders/ato/littelfuse-fuse-holder-ato-flr-pcb-datasheet.pdf
@@ -88934,6 +88955,13 @@ WiFi IEEE802.11 b/g/n
 0
 44
 44
+Rasberry Pi 0W footprint
+MODULE_SC0065
+
+
+0
+40
+40
 Relay_SMD
 Relay_2P2T_10x6mm_TE_IMxxG
 Signal Relay, 10x6mm, 2 Form C, Gull Wings, https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7F108-98001%7FZ.1%7Fpdf%7FEnglish%7FENG_DS_108-98001_Z.1.pdf
@@ -99539,3 +99567,10 @@ Varistor VF
 0
 2
 2
+mp1584
+mp1584_footprint
+
+
+0
+8
+8
