@@ -1,4 +1,4 @@
-24754883956024383
+24760144467025790
 4x1_ESC
 4x1_ESC
 JST EH series connector, S6B-EH (http://www.jst-mfg.com/product/pdf/eng/eEH.pdf), generated with kicad-footprint-generator
@@ -58337,6 +58337,27 @@ GY-NEO6MV2foot
 0
 4
 4
+Graphics
+biggerdrone
+
+
+0
+0
+0
+Graphics
+drone
+
+
+0
+0
+0
+Graphics
+words
+
+
+0
+0
+0
 HMC5883L
 HMC5883L_footprint
 
