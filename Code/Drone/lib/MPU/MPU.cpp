@@ -14,10 +14,6 @@ static unsigned long last_ms = 0; // ms
 // Initialize MPU and SPI
 bool initMPU()
 {
-    Serial.begin(115200);
-    while (!Serial)
-    {
-    }
 
     SPI.begin(18, 19, 23, 5); // SCLK, MISO, MOSI, CS
 

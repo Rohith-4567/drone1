@@ -20,10 +20,10 @@ void initESCs()
 void calibrateESCs()
 {
 
-  Serial.println("Type '1' after powering on the ESC to start calibration.");
-  while (!Serial.available())
-    ;            // Wait for user input
-  Serial.read(); // Clear the input buffer
+  // Serial.println("Type '1' after powering on the ESC to start calibration.");
+  // while (!Serial.available())
+  //   ;            // Wait for user input
+  // Serial.read(); // Clear the input buffer
 
   Serial.println("Sending MAX signal to calibrate...");
   esc1.writeMicroseconds(2000); // Max throttle
