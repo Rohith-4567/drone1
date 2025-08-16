@@ -38,9 +38,15 @@ function fetchPID() {
   fetch('/getPID').then(r => r.json()).then(data => {
     for (let key in data) {
       if(document.getElementById(key)) {
-        document.getElementById(key).value = data[key];
         if (key === "throttle") {
-          document.getElementById('throttleValue').textContent = data[key];
+          let rounded = Math.round(data[key]);
+          let slider = document.getElementById('throttle');
+          if (parseInt(slider.value) !== rounded) {
+            slider.value = rounded;
+          }
+          document.getElementById('throttleValue').textContent = rounded;
+        } else {
+          document.getElementById(key).value = data[key];
         }
       }
     }
@@ -92,7 +98,7 @@ window.onload = function() {
     json += "\"Kp_pitch\":" + String(Kp_pitch, 6) + ",";
     json += "\"Ki_pitch\":" + String(Ki_pitch, 6) + ",";
     json += "\"Kd_pitch\":" + String(Kd_pitch, 6);
-    json += ",\"throttle\":" + String(throttle, 6);
+    json += ",\"throttle\":" + String((int)throttle);
     json += "}";
     server.send(200, "application/json", json); });
 
@@ -105,7 +111,7 @@ window.onload = function() {
     json += "\"Kp_pitch\":" + String(Kp_pitch, 6) + ",";
     json += "\"Ki_pitch\":" + String(Ki_pitch, 6) + ",";
     json += "\"Kd_pitch\":" + String(Kd_pitch, 6);
-    json += ",\"throttle\":" + String(throttle, 6);
+    json += ",\"throttle\":" + String((int)throttle);
     json += "}";
     server.send(200, "application/json", json); });
 

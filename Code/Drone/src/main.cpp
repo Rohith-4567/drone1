@@ -9,6 +9,8 @@ int PWMthrottle = 1000;
 float Setpoint, Input, Output;
 QuickPID myPID(&Input, &Output, &Setpoint);
 
+boolean off = false;
+
 void setup()
 {
     Serial.begin(115200);
@@ -28,27 +30,36 @@ void setup()
     Input = pitch_deg();
     Setpoint = 0; // Target pitch angle
     myPID.SetMode(myPID.Control::automatic);
-    myPID.SetTunings(5, 0, 0);
+    myPID.SetTunings(5, 0, .3);
     myPID.SetOutputLimits(-500, 500); // Allow output to go negative and positive
 }
 
 void loop()
 {
-    updateYaw();
+    while (!off)
+    {
+        updateYaw();
 
-    accessPointLoop();
-    PWMthrottle = map(throttle, 0, 100, 1000, 2000); // Map throttle from 0-100 to 1000-2000 PWM range
-    setThrottle(PWMthrottle);
-    Input = pitch_deg();
-    myPID.Compute();
-    frontLeft(PWMthrottle + Output);
-    frontRight(PWMthrottle + Output);
-    backLeft(PWMthrottle - Output);
-    backRight(PWMthrottle - Output);
+        accessPointLoop();
+        PWMthrottle = map(throttle, 0, 100, 1000, 2000); // Map throttle from 0-100 to 1000-2000 PWM range
+        setThrottle(PWMthrottle);
+        Input = pitch_deg();
+        myPID.Compute();
+        frontLeft(PWMthrottle + Output);
+        frontRight(PWMthrottle + Output);
+        backLeft(PWMthrottle - Output);
+        backRight(PWMthrottle - Output);
 
-    Serial.print(pitch_deg());
-    Serial.print(" ");
-    Serial.println(Output);
+        Serial.print(pitch_deg());
+        Serial.print(" ");
+        Serial.println(Output);
+
+        if (pitch_deg() > 80 | pitch_deg() < -80)
+        {
+            setThrottle(1000);
+            off = true;
+        }
+    }
 
     delay(100);
 }
