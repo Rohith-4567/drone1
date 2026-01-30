@@ -1,65 +1,44 @@
-#include <ESP32Servo.h>
+#include "AccessPoint.h"
 #include "Calibrate.h"
 #include "MPU.h"
-#include "AccessPoint.h"
 #include "QuickPID.h"
+#include <Arduino.h>
+#include <ESP32Servo.h>
 
-int PWMthrottle = 1000;
+#include "rtos_app.h"
 
-float Setpoint, Input, Output;
-QuickPID myPID(&Input, &Output, &Setpoint);
+extern float Setpoint, Input,
+    Output; // if you keep them global elsewhere (or remove)
+extern QuickPID myPID;
 
-boolean off = false;
+void setup() {
+  Serial.begin(115200);
+  delay(1000);
 
-void setup()
-{
-    Serial.begin(115200);
+  initESCs();
+  delay(100);
+  calibrateESCs();
+
+  while (!initMPU()) {
+    Serial.println("Failed to initialize MPU, retrying...");
     delay(1000);
-    initESCs();
-    delay(100);
-    calibrateESCs();
+  }
 
-    while (!initMPU())
-    {
-        Serial.println("Failed to initialize MPU, retrying...");
-        delay(1000);
-    }
-    setupAccessPoint();
-    Serial.println("AP setup complete");
+  setupAccessPoint();
+  Serial.println("AP setup complete");
 
-    Input = pitch_deg();
-    Setpoint = 0; // Target pitch angle
-    myPID.SetMode(myPID.Control::automatic);
-    myPID.SetTunings(5, 0, .3);
-    myPID.SetOutputLimits(-500, 500); // Allow output to go negative and positive
+  // PID init (keep your tuning)
+  Input = pitch_deg();
+  Setpoint = 0;
+  myPID.SetMode(myPID.Control::automatic);
+  myPID.SetTunings(5, 0, .3);
+  myPID.SetOutputLimits(-500, 500);
+
+  // Start RTOS tasks + DRDY interrupt
+  rtosStart();
 }
 
-void loop()
-{
-    while (!off)
-    {
-        updateYaw();
-
-        accessPointLoop();
-        PWMthrottle = map(throttle, 0, 100, 1000, 2000); // Map throttle from 0-100 to 1000-2000 PWM range
-        setThrottle(PWMthrottle);
-        Input = pitch_deg();
-        myPID.Compute();
-        frontLeft(PWMthrottle + Output);
-        frontRight(PWMthrottle + Output);
-        backLeft(PWMthrottle - Output);
-        backRight(PWMthrottle - Output);
-
-        Serial.print(pitch_deg());
-        Serial.print(" ");
-        Serial.println(Output);
-
-        if (pitch_deg() > 80 | pitch_deg() < -80)
-        {
-            setThrottle(1000);
-            off = true;
-        }
-    }
-
-    delay(100);
+void loop() {
+  // Don’t do work here; RTOS tasks are running.
+  vTaskDelay(pdMS_TO_TICKS(1000));
 }
