@@ -11,7 +11,7 @@
 static constexpr int CORE_CONTROL = 1; // pin PID + motors here
 static constexpr int CORE_WIFI = 0;    // WiFi/AP + other noise here
 
-static constexpr gpio_num_t MPU_DRDY_GPIO = GPIO_NUM_27; // CHANGE to your pin
+static constexpr gpio_num_t MPU_DRDY_GPIO = GPIO_NUM_25; // CHANGE to your pin
 
 // -------------------- Control objects --------------------
 static int PWMthrottle = 1000;
@@ -105,7 +105,6 @@ static void wifiTask(void *arg) {
       Serial.println(Output);
     }
 
-    // Run at ~200 Hz (adjust as needed)
     vTaskDelayUntil(&lastWake, pdMS_TO_TICKS(5));
   }
 }
@@ -114,9 +113,7 @@ static void wifiTask(void *arg) {
 void rtosStart() {
   // Setup DRDY pin interrupt
   pinMode((int)MPU_DRDY_GPIO, INPUT);
-  attachInterrupt((int)MPU_DRDY_GPIO, mpuDrdyIsr, RISING);
 
-  // Create tasks
   xTaskCreatePinnedToCore(controlTask, "controlTask", 4096, nullptr,
                           5, // higher priority
                           &gControlTaskHandle, CORE_CONTROL);
@@ -124,4 +121,9 @@ void rtosStart() {
   xTaskCreatePinnedToCore(wifiTask, "wifiTask", 4096, nullptr,
                           2, // lower priority
                           &gWifiTaskHandle, CORE_WIFI);
+
+  // assign tasks before attaching interrupt to avoid race condition
+  attachInterrupt((int)MPU_DRDY_GPIO, mpuDrdyIsr, RISING);
+
+  // Create tasks
 }

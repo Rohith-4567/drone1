@@ -8,17 +8,19 @@
 
 Servo esc1, esc2, esc3, esc4;
 
-void initESCs()
-{
-  esc1.attach(ESC_PIN1, 1000, 2000); // min and max pulse width (in microseconds)
-  esc2.attach(ESC_PIN2, 1000, 2000); // min and max pulse width (in microseconds)
-  esc3.attach(ESC_PIN3, 1000, 2000); // min and max pulse width (in microseconds)
-  esc4.attach(ESC_PIN4, 1000, 2000); // min and max pulse width (in microseconds)
+void initESCs() {
+  esc1.attach(ESC_PIN1, 1000,
+              2000); // min and max pulse width (in microseconds)
+  esc2.attach(ESC_PIN2, 1000,
+              2000); // min and max pulse width (in microseconds)
+  esc3.attach(ESC_PIN3, 1000,
+              2000); // min and max pulse width (in microseconds)
+  esc4.attach(ESC_PIN4, 1000,
+              2000); // min and max pulse width (in microseconds)
   delay(5000);
 }
 
-void calibrateESCs()
-{
+void calibrateESCs() {
 
   // Serial.println("Type '1' after powering on the ESC to start calibration.");
   // while (!Serial.available())
@@ -43,34 +45,20 @@ void calibrateESCs()
   delay(10000);
 }
 
-void setThrottle(int speed)
-{
+void setThrottle(int speed) {
   speed = constrain(speed, 1000, 2000);
   esc1.writeMicroseconds(speed);
   esc2.writeMicroseconds(speed);
   esc3.writeMicroseconds(speed);
   esc4.writeMicroseconds(speed);
 
-  Serial.print("Throttle set to: ");
   Serial.println(speed);
 }
 
-void frontLeft(int speed)
-{
-  esc1.writeMicroseconds(speed);
-}
+void frontLeft(int speed) { esc1.writeMicroseconds(speed); }
 
-void frontRight(int speed)
-{
-  esc2.writeMicroseconds(speed);
-}
+void frontRight(int speed) { esc2.writeMicroseconds(speed); }
 
-void backLeft(int speed)
-{
-  esc3.writeMicroseconds(speed);
-}
+void backLeft(int speed) { esc3.writeMicroseconds(speed); }
 
-void backRight(int speed)
-{
-  esc4.writeMicroseconds(speed);
-}
+void backRight(int speed) { esc4.writeMicroseconds(speed); }

@@ -7,10 +7,6 @@
 
 #include "rtos_app.h"
 
-extern float Setpoint, Input,
-    Output; // if you keep them global elsewhere (or remove)
-extern QuickPID myPID;
-
 void setup() {
   Serial.begin(115200);
   delay(1000);
