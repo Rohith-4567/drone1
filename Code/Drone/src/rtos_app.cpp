@@ -16,8 +16,8 @@ static constexpr gpio_num_t MPU_DRDY_GPIO = GPIO_NUM_25; // CHANGE to your pin
 // -------------------- Control objects --------------------
 static int PWMthrottle = 1000;
 
-static float Setpoint = 0.0f, Input = 0.0f, Output = 0.0f;
-static QuickPID myPID(&Input, &Output, &Setpoint);
+float Setpoint = 0.0f, Input = 0.0f, Output = 0.0f;
+QuickPID myPID(&Input, &Output, &Setpoint);
 
 static volatile bool gOff = false;
 

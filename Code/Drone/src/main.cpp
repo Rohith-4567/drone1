@@ -1,7 +1,7 @@
 #include "AccessPoint.h"
 #include "Calibrate.h"
 #include "MPU.h"
-#include "QuickPID.h"
+#include "control_params.h"
 #include <Arduino.h>
 #include <ESP32Servo.h>
 
@@ -10,6 +10,8 @@
 void setup() {
   Serial.begin(115200);
   delay(1000);
+
+  controlParamsInit();  // Must run before any controlParamsGetCopy/controlParamsUpdate
 
   initESCs();
   delay(100);

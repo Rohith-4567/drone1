@@ -14,7 +14,4 @@ float pitch_deg();
 float yaw_deg();
 bool imuUpdate();
 
-// Update yaw integration (call every loop)
-void updateYaw();
-
 #endif
